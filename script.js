@@ -6,7 +6,7 @@ const figures = [
   { id: "cilinder", name: "Cilinder", figure: "images/cilinder.jpg", formula: "images/for_cil.jpg" },
   { id: "prisma", name: "Prisma", figure: "images/prisma.jpg", formula: "images/for_pris.jpg" },
   { id: "piramide", name: "Piramide", figure: "images/piramide.jpg", formula: "images/for_pira.jpg" },
-  { id: "kegel", name: "Kegel", figure: "images/kegel.jpg", formula: "images/for_keg.jpg" },
+  { id: "kegel", name: "Kegel", figure: "images/kegel.jpg", formula: "images/for_keg.png" },
   { id: "bol", name: "Bol", figure: "images/bol.jpg", formula: "images/for_bol.jpg" }
 ];
 
