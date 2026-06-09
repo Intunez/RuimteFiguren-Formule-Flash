@@ -1,1 +1,142 @@
+* {
+  box-sizing: border-box;
+}
 
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+
+#app {
+  min-height: 100vh;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 1000px;
+  width: 100%;
+}
+
+h1, h2 {
+  margin-top: 0;
+}
+
+button {
+  font-size: 1.3rem;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 14px;
+  background: #ff1493;
+  color: white;
+  cursor: pointer;
+  margin: 10px;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.timer {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 15px;
+}
+
+.card {
+  aspect-ratio: 3 / 4;
+  background: white;
+  border: 4px solid #222;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.card img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.card.hidden img {
+  display: none;
+}
+
+.card.hidden {
+  background: linear-gradient(135deg, #ff1493, #ffcc00);
+}
+
+.card.matched {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.mol-grid,
+.flits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.combo,
+.figure-choice {
+  background: white;
+  border: 4px solid #222;
+  border-radius: 14px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.combo img,
+.figure-choice img {
+  max-width: 100%;
+  height: 130px;
+  object-fit: contain;
+}
+
+.formula-box {
+  background: white;
+  border: 4px solid #222;
+  border-radius: 14px;
+  padding: 20px;
+  margin: 20px;
+}
+
+.formula-box img {
+  max-height: 160px;
+  max-width: 100%;
+}
+
+.feedback {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 15px;
+}
+
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  #app {
+    padding: 15px;
+  }
+}
