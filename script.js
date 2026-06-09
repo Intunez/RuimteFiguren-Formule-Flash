@@ -14,6 +14,18 @@ let startTime;
 let timerInterval;
 let selectedCards = [];
 let matchedPairs = 0;
+let molRound = 0;
+
+const molChallenges = [
+  { wrongTarget: "kubus", wrongFormula: "cilinder" },
+  { wrongTarget: "balk", wrongFormula: "kubus" },
+  { wrongTarget: "piramide", wrongFormula: "prisma" },
+  { wrongTarget: "cilinder", wrongFormula: "kegel" },
+  { wrongTarget: "kegel", wrongFormula: "prisma" }
+];
+
+let flitsQuestions = [];
+let currentFlits = 0;
 
 function setBackground(number) {
   document.body.style.backgroundImage = `url("images/achtergrond${number}.png")`;
@@ -58,6 +70,7 @@ function getTitle(seconds) {
 function showStart() {
   setBackground(1);
   const best = localStorage.getItem("bestTime");
+
   app.innerHTML = `
     <div class="panel">
       <h1>Ruimtefiguren Formule Flash</h1>
@@ -70,6 +83,7 @@ function showStart() {
 }
 
 function startGame() {
+  molRound = 0;
   startTimer();
   showMemory();
 }
@@ -91,7 +105,7 @@ function showMemory() {
       <p>Zoek de juiste combinatie van ruimtefiguur en formule.</p>
       <div class="grid">
         ${cards.map((card, index) => `
-  <div class="card hidden ${card.type}" data-id="${card.id}" data-index="${index}">
+          <div class="card hidden ${card.type}" data-id="${card.id}" data-index="${index}">
             <img src="${card.img}" alt="">
           </div>
         `).join("")}
@@ -130,7 +144,7 @@ function flipCard(card) {
         a.classList.add("hidden");
         b.classList.add("hidden");
         selectedCards = [];
-      }, 900);
+      }, 3000);
     }
   }
 }
@@ -138,29 +152,36 @@ function flipCard(card) {
 function showMol() {
   setBackground(3);
 
+  const challenge = molChallenges[molRound];
   const correct = shuffle(figures);
-  const molIndex = Math.floor(Math.random() * correct.length);
-  let wrongFormula;
 
-  do {
-    wrongFormula = figures[Math.floor(Math.random() * figures.length)];
-  } while (wrongFormula.id === correct[molIndex].id);
+  const combos = correct.map(f => {
+    let shownFormula = f.formula;
+    let isMol = false;
 
-  const combos = correct.map((f, index) => ({
-    figure: f.figure,
-    name: f.name,
-    formula: index === molIndex ? wrongFormula.formula : f.formula,
-    isMol: index === molIndex
-  }));
+    if (f.id === challenge.wrongTarget) {
+      const wrong = figures.find(x => x.id === challenge.wrongFormula);
+      shownFormula = wrong.formula;
+      isMol = true;
+    }
+
+    return {
+      figure: f.figure,
+      name: f.name,
+      formula: shownFormula,
+      isMol
+    };
+  });
 
   app.innerHTML = `
     <div class="panel">
       <div id="timer" class="timer"></div>
       <h2>Ronde 2: Wie is de Mol?</h2>
+      <h3>Opdracht ${molRound + 1} van ${molChallenges.length}</h3>
       <p>Welke formule klopt niet?</p>
       <div id="feedback" class="feedback"></div>
       <div class="mol-grid">
-        ${combos.map((c, index) => `
+        ${combos.map(c => `
           <div class="combo" data-mol="${c.isMol}">
             <h3>${c.name}</h3>
             <img src="${c.figure}" alt="">
@@ -177,16 +198,23 @@ function showMol() {
     combo.addEventListener("click", () => {
       if (combo.dataset.mol === "true") {
         document.getElementById("feedback").textContent = "✅ Juist! Je hebt de mol gevonden.";
-        setTimeout(showFlits, 1000);
+
+        setTimeout(() => {
+          molRound++;
+
+          if (molRound >= molChallenges.length) {
+            showFlits();
+          } else {
+            showMol();
+          }
+        }, 900);
+
       } else {
         document.getElementById("feedback").textContent = "❌ Niet juist. Kijk nog eens goed.";
       }
     });
   });
 }
-
-let flitsQuestions = [];
-let currentFlits = 0;
 
 function showFlits() {
   setBackground(4);
