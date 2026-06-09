@@ -140,4 +140,7 @@ button:hover {
   #app {
     padding: 15px;
   }
+  .card.formula img {
+  transform: scale(1.5);
+}
 }
