@@ -91,7 +91,7 @@ function showMemory() {
       <p>Zoek de juiste combinatie van ruimtefiguur en formule.</p>
       <div class="grid">
         ${cards.map((card, index) => `
-          <div class="card hidden" data-id="${card.id}" data-index="${index}">
+  <div class="card hidden ${card.type}" data-id="${card.id}" data-index="${index}">
             <img src="${card.img}" alt="">
           </div>
         `).join("")}
