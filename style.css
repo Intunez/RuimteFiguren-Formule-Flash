@@ -143,4 +143,7 @@ button:hover {
   .card.formula img {
   transform: scale(1.5);
 }
+  .card.formula img {
+  transform: scale(1.5);
+}
 }
